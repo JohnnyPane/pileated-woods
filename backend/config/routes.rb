@@ -18,8 +18,9 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :products, only: [:index, :show]
+      resources :products, only: [:index, :show, :create]
       resources :live_edge_slabs, controller: 'products', type: 'LiveEdgeSlab'
+      resources :uploads, only: [:create, :destroy]
     end
   end
 end

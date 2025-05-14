@@ -1,9 +1,9 @@
-import pileatedApi from "./pileatedApi.js";
+import pileatedClient from "./pileatedClient.js";
 
 export const AuthService = {
   async login(email, password) {
     try {
-      const response = await pileatedApi.post('/users/login', {
+      const response = await pileatedClient.post('/users/login', {
         user: { email, password }
       });
 
@@ -23,7 +23,7 @@ export const AuthService = {
 
   async signup(email, password, password_confirmation) {
     try {
-      const response = await pileatedApi.post('/users/signup', {
+      const response = await pileatedClient.post('/users/signup', {
         user: { email, password, password_confirmation }
       });
 
@@ -42,7 +42,7 @@ export const AuthService = {
 
   async logout() {
     try {
-      await pileatedApi.delete('/users/logout');
+      await pileatedClient.delete('/users/logout');
 
       localStorage.removeItem('authToken');
       localStorage.removeItem('user');

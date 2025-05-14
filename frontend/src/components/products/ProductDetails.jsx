@@ -2,28 +2,35 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import './Products.scss';
 
-import pileatedApi from "../../services/pileatedApi.js";
+import PileatedApi from "../../services/PileatedApi.js";
 
-function ProductDetail() {
+const productApi = new PileatedApi('product');
+const rootURL = import.meta.env.VITE_API_ROOT_URL;
+
+function ProductDetail({ providedProduct }) {
   const { id } = useParams();
-  const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [product, setProduct] = useState(providedProduct);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const response = await pileatedApi.get(`/products/${id}`);
-        setProduct(response.data);
-        setLoading(false);
-      } catch (err) {
-        setError('Failed to fetch product details');
-        setLoading(false);
-        console.error(err);
-      }
-    };
+  const fetchProduct = async () => {
+    setLoading(true);
+    try {
+      const response = await productApi.get(id);
+      setProduct(response);
+      setLoading(false);
+    } catch (err) {
+      setError('Failed to fetch product details');
+      setLoading(false);
+      console.error(err);
+    }
+  };
 
-    fetchProduct();
+  useEffect(() => {
+
+    if (!providedProduct || providedProduct.id != id) {
+      fetchProduct();
+    }
   }, [id]);
 
   if (loading) return <div className="loading">Loading product details...</div>;
@@ -57,7 +64,7 @@ function ProductDetail() {
         <div className="product-detail-images">
           {product.images && product.images.length > 0 ? (
             <img
-              src={`/images/${product.images[0].url}`}
+              src={rootURL + product.images[0]}
               alt={product.name}
               className="product-detail-image"
             />

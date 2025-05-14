@@ -6,19 +6,20 @@ const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
+  const [isAdminUser, setIsAdminUser] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if user is logged in on component mount
     const checkAuthStatus = () => {
       const token = localStorage.getItem('auth_token');
       const user = AuthService.getCurrentUser();
 
       setIsAuthenticated(!!token);
       setCurrentUser(user);
+      setIsAdminUser(user.admin);
       setLoading(false);
     };
 
@@ -62,6 +63,7 @@ export const AuthProvider = ({ children }) => {
     currentUser,
     isAuthenticated,
     loading,
+    isAdminUser,
     login,
     signup,
     logout

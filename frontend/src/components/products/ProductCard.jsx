@@ -3,6 +3,8 @@ import { Button, Card, Group, Image, Text } from '@mantine/core';
 
 import { humanizeProductType } from "../../utils/humanizeText.js";
 
+const rootURL = import.meta.env.VITE_API_ROOT_URL;
+
 const CarouselCard = ({ cardData }) => {
   const { images, name, description, productable_type, price } = cardData;
 
@@ -13,7 +15,7 @@ const CarouselCard = ({ cardData }) => {
       <Card.Section>
         {images && images.length > 0 ? (
           <Image
-            src={`/images/${images[0].url}`}
+            src={rootURL + images[0]}
             alt={name}
             className="product-image"
           />

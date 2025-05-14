@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Card, Group, Image, RingProgress, Text } from '@mantine/core';
 
-import pileatedApi from "../../services/pileatedApi.js";
+import PileatedApi from "../../services/PileatedApi.js";
 import './Products.scss';
 import ProductCard from "./ProductCard.jsx";
+
+const productApi = new PileatedApi('product');
 
 function ProductList() {
   const [products, setProducts] = useState([]);
@@ -14,8 +14,8 @@ function ProductList() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await pileatedApi.get('/products');
-        setProducts(response.data);
+        const response = await productApi.query();
+        setProducts(response);
         setLoading(false);
       } catch (err) {
         setError('Failed to fetch products');
