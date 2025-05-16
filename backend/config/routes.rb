@@ -22,7 +22,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :cart, only: [:show, :update]
+      resources :carts, only: [:show, :update]
       resources :cart_items, only: [:create, :update, :destroy]
       resources :guest_carts, only: [:show, :create] do
         member do

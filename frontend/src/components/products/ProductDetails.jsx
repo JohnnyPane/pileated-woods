@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { Button } from "@mantine/core";
 import './Products.scss';
 
+import { useCart } from "../../context/CartContext.jsx";
 import PileatedApi from "../../services/PileatedApi.js";
 
 const productApi = new PileatedApi('product');
@@ -12,6 +14,7 @@ function ProductDetail({ providedProduct }) {
   const [product, setProduct] = useState(providedProduct);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const { addToCart } = useCart();
 
   const fetchProduct = async () => {
     setLoading(true);
@@ -80,7 +83,7 @@ function ProductDetail({ providedProduct }) {
 
           {product.stock > 0 ? (
             <div className="product-detail-action">
-              <button className="button button-primary">Add to Cart</button>
+              <Button onClick={() => addToCart(product)} radius="md">Add to cart</Button>
               <span className="product-detail-stock">
                 {product.stock} {product.stock === 1 ? 'item' : 'items'} in stock
               </span>

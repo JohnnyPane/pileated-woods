@@ -97,18 +97,18 @@ export default class CartService {
   }
 
   async fetchCartFromServer() {
-    const user = localStorage.getItem('user');
+    const user = JSON.parse(localStorage.getItem('user'));
 
     if (user && user.id) {
-      return this.fetchUserCart();
+      return this.fetchUserCart(user);
     } else {
       return this.fetchGuestCart();
     }
   }
 
-  async fetchUserCart() {
+  async fetchUserCart(user) {
     try {
-      const response = await cartApi.get();
+      const response = await cartApi.get(user.id);
       const { cart_items } = response;
       this.saveCartItems(cart_items);
       return response;
@@ -179,8 +179,10 @@ export default class CartService {
   }
 
   async updateCartOnLogin() {
+    const user = JSON.parse(localStorage.getItem('user'));
+
     try {
-      const response = await cartApi.get();
+      const response = await cartApi.get(user.id);
       const { cartItems } = response;
       this.saveCartItems(cartItems);
       return cartItems;

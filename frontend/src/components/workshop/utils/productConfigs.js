@@ -6,8 +6,13 @@ export const LiveEdgeSlabConfig = [
   { label: 'Dried', type: 'switch', value: 'dried' }
 ]
 
+export const CustomProductConfig = [
+  { label: 'Metadata', placeholder: 'Enter metadata', type: 'text', value: 'metadata' },
+];
+
 export const PRODUCT_FORM_CONFIGS = {
-  'LiveEdgeSlab': LiveEdgeSlabConfig
+  'LiveEdgeSlab': LiveEdgeSlabConfig,
+  'CustomProduct': CustomProductConfig
 }
 
 export const getProductFormConfig = (productType) => {

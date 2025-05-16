@@ -8,4 +8,8 @@ class User < ApplicationRecord
   has_many :carts
   has_many :cart_items, through: :carts
 
+  def most_recent_cart
+    carts.order(created_at: :desc).first
+  end
+
 end

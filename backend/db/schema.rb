@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_15_073204) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_16_104833) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -76,6 +76,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_15_073204) do
     t.datetime "updated_at", null: false
     t.index ["guest_token"], name: "index_carts_on_guest_token", unique: true
     t.index ["user_id"], name: "index_carts_on_user_id"
+  end
+
+  create_table "custom_products", force: :cascade do |t|
+    t.jsonb "metadata"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "jwt_denylists", force: :cascade do |t|

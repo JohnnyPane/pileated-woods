@@ -1,18 +1,28 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Checkbox, Group, TextInput, Textarea, Card, Select, Grid, Fieldset } from '@mantine/core';
+import { Button, Group, Select, Grid, Fieldset } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import './ProductForm.scss'
 
 import PileatedApi from "../../services/PileatedApi.js";
 import ProductFormFields from "./ProductFormFields.jsx";
+import FormInput from "../ui/FormInput.jsx";
 
 const productApi = new PileatedApi('product');
 
 const productTypes = [
   { value: '', label: 'Select a product type' },
   { value: 'LiveEdgeSlab', label: 'Live Edge Slab' },
+  { value: 'CustomProduct', label: 'Custom Product' },
 ];
+
+const productInputs = [
+  { name: 'name', label: 'Name', type: 'text', value: 'product.name' },
+  { name: 'description', label: 'Description', type: 'textarea', value: 'product.description' },
+  { name: 'price', label: 'Price', type: 'number', value: 'product.price' },
+  { name: 'stock', label: 'Stock', type: 'number', value: 'product.stock' },
+  { name: 'featured', label: 'Featured', type: 'checkbox', value: 'product.featured' },
+]
 
 const ProductForm = ({ editMode = false, productId = null }) => {
   const [productType, setProductType] = useState(null);
@@ -78,33 +88,17 @@ const ProductForm = ({ editMode = false, productId = null }) => {
         <Grid>
           <Grid.Col span={{ base: 12, xs: 6 }}>
             <Fieldset legend="Product Information">
-              <TextInput
-                label="Name"
-                placeholder="Product name"
-                {...form.getInputProps('product.name')}
-              />
-              <Textarea
-                label="Description"
-                placeholder="Product description"
-                {...form.getInputProps('product.description')}
-              />
-              <TextInput
-                label="Price"
-                placeholder="Product price"
-                type="number"
-                {...form.getInputProps('product.price')}
-              />
-              <TextInput
-                label="Stock"
-                placeholder="Product stock"
-                type="number"
-                {...form.getInputProps('product.stock')}
-              />
-              <Checkbox
-                label="Featured"
-                mt="md"
-                {...form.getInputProps('product.featured', { type: 'checkbox' })}
-              />
+              {productInputs.map((input) => (
+                <FormInput
+                  key={input.name}
+                  label={input.label}
+                  placeholder={input.label}
+                  required
+                  type={input.type}
+                  {...form.getInputProps(`product.${input.name}`, { type: 'type' })}
+                  error={form.errors[input.name]}
+                />
+              ))}
             </Fieldset>
           </Grid.Col>
 

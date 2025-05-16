@@ -42,8 +42,12 @@ module Api
       end
 
       def productable_params
-        params.require(:product).require(:productable_attributes).permit(
-          :species, :width, :height, :length, :dried
+        # params.require(:product).require(:productable_attributes).permit(
+        #   :species, :width, :height, :length, :dried, metadata: {}
+        # )
+        product_params = params.require(:product)
+        product_params.fetch(:productable_attributes, {}).permit(
+          :species, :width, :height, :length, :dried, metadata: {}
         )
       end
 

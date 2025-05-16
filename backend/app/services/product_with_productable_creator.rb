@@ -22,7 +22,7 @@ class ProductWithProductableCreator
   private
 
   def productable_types
-    %[LiveEdgeSlab]
+    %[LiveEdgeSlab CustomOrder]
   end
 
   def build_productable

@@ -16,9 +16,9 @@ module Api
 
       def set_cart
         if user_signed_in?
-          @cart = current_user.cart || create_cart_for_user
+          @cart = current_user.most_recent_cart || create_cart_for_user
         else
-          @cart = Cart.find_by(id: params[:id]) || create_cart_for_guest
+          @cart = Cart.find_by(guest_token: guest_token) || create_cart_for_guest
         end
       end
 

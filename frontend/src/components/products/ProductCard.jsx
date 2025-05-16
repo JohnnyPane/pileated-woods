@@ -1,4 +1,4 @@
-
+import {useNavigate } from "react-router-dom";
 import { Button, Card, Group, Image, Text } from '@mantine/core';
 
 import { humanizeProductType } from "../../utils/humanizeText.js";
@@ -10,10 +10,15 @@ const ProductCard = ({ cardData }) => {
   const { images, name, description, productable_type, price } = cardData;
   const { addToCart } = useCart();
 
+  const navigate = useNavigate();
+
   const productTypeText = humanizeProductType(productable_type);
+  const handleCardClick = () => {
+    navigate(`/products/${cardData.id}`);
+  }
 
   return (
-    <Card shadow="sm" padding="lg" radius="8px" withBorder={true}>
+    <Card shadow="sm" padding="lg" radius="8px" withBorder={true} onClick={handleCardClick} className="clickable">
       <Card.Section>
         {images && images.length > 0 ? (
           <Image
@@ -49,7 +54,6 @@ const ProductCard = ({ cardData }) => {
           </Text>
         </div>
 
-        <Button onClick={() => addToCart(cardData)} radius="md">Add to cart</Button>
       </Group>
     </Card>
   );

@@ -33,9 +33,9 @@ module Api
 
       def set_cart
         if user_signed_in?
-          @cart = current_user.cart || create_cart_for_user
+          @cart = current_user.most_recent_cart || create_cart_for_user
         else
-          @cart = Cart.find_by(id: params[:cart_id]) || create_cart_for_guest
+          @cart = Cart.find_by(guest_token: guest_token) || create_cart_for_guest
         end
       end
 
@@ -45,6 +45,10 @@ module Api
 
       def cart_item_params
         params.require(:cart_item).permit(:quantity, :product_id, :cart_id)
+      end
+
+      def guest_token
+        request.headers['X-Guest-Token']
       end
 
     end

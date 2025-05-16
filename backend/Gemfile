@@ -54,3 +54,4 @@ gem "jwt", "~> 2.10"
 gem "rack-cors", "~> 2.0"
 gem 'jsonapi-serializer'
 gem 'stripe'
+gem 'aws-sdk-s3', require: false

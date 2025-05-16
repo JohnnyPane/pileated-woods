@@ -14,6 +14,7 @@ import {
   Progress
 } from '@mantine/core';
 import { IconUpload, IconPhoto, IconX, IconTrash } from '@tabler/icons-react';
+
 import PileatedApi from "../../services/PileatedApi.js";
 
 const uploadApi = new PileatedApi('upload');
@@ -133,9 +134,10 @@ const ImageUploader = ({
       setUploading(true);
       setProgress(0);
       const images = await uploadApi.uploadImages(modelId, modelType, files, setProgress)
-      setUploadedImages([...uploadedImages, ...images]);
+      const imageUrls = images.image_urls
+      setUploadedImages([...uploadedImages, ...imageUrls]);
       setFiles([]);
-      onUploadComplete(images);
+      onUploadComplete(imageUrls);
     } catch (error) {
       setError('Upload failed: ' + error.message);
     }

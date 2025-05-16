@@ -16,11 +16,10 @@ export const CartProvider = ({ children }) => {
   const setInitialCart = async () => {
     const response = await cartService.fetchCartFromServer();
     const total = cartService.cartTotal();
-    setCart({ items: response.cart_items, total });
+    setCart({ items: response?.cart_items || [], total });
   }
 
   const initCart = async () => {
-    console.log("initCart");
     setLoading(true);
     await cartService.initializeCart();
 
@@ -99,6 +98,7 @@ export const CartProvider = ({ children }) => {
   const updateCartAfterLogin = async () => {
     setLoading(true);
     try {
+      console.log("Updating cart after login...");
       const updatedCart = await cartService.updateCartOnLogin();
       if (updatedCart) {
         const { cart_items } = updatedCart;
