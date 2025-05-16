@@ -30,6 +30,14 @@
   justify-content: center;
 }
 
+.to-right {
+  justify-content: flex-end;
+}
+
+.to-left {
+  justify-content: flex-start;
+}
+
 .margin {
     margin: 0.5rem;
 }

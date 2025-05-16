@@ -28,9 +28,9 @@ h1 {
 }
 
 
-.main-container {
-  padding-top: 60px; /* offset for the navbar */
-}
+/*.main-container {*/
+/*  padding-top: 60px; !* offset for the navbar *!*/
+/*}*/
 
 .main-container-content {
   padding: 20px;

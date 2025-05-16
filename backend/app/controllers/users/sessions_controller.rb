@@ -20,7 +20,7 @@ module Users
         guest_cart = Cart.find_by(guest_token: guest_token)
         if guest_cart
           # Move items from guest cart to user cart
-          user_cart = current_user.cart || Cart.create(user: current_user)
+          user_cart = current_user.most_recent_cart || Cart.create(user: current_user)
           guest_cart.transfer_to(user_cart)
         end
       end

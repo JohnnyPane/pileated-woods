@@ -5,6 +5,7 @@ import './utility.scss'
 import { AuthProvider, useAuth } from "./context/AuthContext.jsx";
 import { CartProvider } from "./context/CartContext.jsx";
 
+import Home from './components/home/Home';
 import ProductList from './components/products/ProductList';
 import ProductDetails from './components/products/ProductDetails';
 import Navbar from './components/navigation/Navbar';
@@ -48,8 +49,9 @@ function App() {
             <main className="main-container">
               <div className="main-container-content">
                 <Routes>
-                  <Route path="/" element={<ProductList />} />
+                  <Route path="/" element={<Home />} />
                   <Route path="/login" element={<LoginSignup />} />
+                  <Route path="/products" element={<ProductList />} />
                   <Route path="/products/:id" element={<ProductDetails />} />
                   <Route path="/cart" element={<Cart />} />
                   <Route path="/checkout" element={
