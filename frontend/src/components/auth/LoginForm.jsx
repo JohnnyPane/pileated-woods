@@ -23,7 +23,7 @@ const LoginForm = () => {
   const handleSubmit = async (values) => {
     try {
       await login(values.email, values.password);
-      navigate('/products');
+      navigate('/');
     } catch (error) {
       console.error('Login failed:', error);
     }

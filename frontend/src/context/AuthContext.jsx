@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AuthService } from '../services/auth';
+import { authService } from '../services/auth';
 
 const AuthContext = createContext(null);
 
@@ -13,14 +13,26 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const checkAuthStatus = () => {
-      const token = localStorage.getItem('auth_token');
-      const user = AuthService.getCurrentUser();
+    const checkAuthStatus = async () => {
+      const token = authService.getAuthToken();
 
-      setIsAuthenticated(!!token);
-      setCurrentUser(user);
-      setIsAdminUser(user.admin);
-      setLoading(false);
+      if (!token) {
+        setIsAuthenticated(false);
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const response = await authService.fetchMe();
+        setCurrentUser(response.data);
+        setIsAdminUser(response.data.admin);
+        setIsAuthenticated(true);
+      } catch (error) {
+        setCurrentUser(null);
+        setIsAuthenticated(false);
+      } finally {
+        setLoading(false);
+      }
     };
 
     checkAuthStatus();
@@ -28,7 +40,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const response = await AuthService.login(email, password);
+      const response = await authService.login(email, password);
       setCurrentUser(response.data);
       setIsAuthenticated(true);
       return response;
@@ -39,7 +51,7 @@ export const AuthProvider = ({ children }) => {
 
   const signup = async (email, password, password_confirmation) => {
     try {
-      const response = await AuthService.signup(email, password, password_confirmation);
+      const response = await authService.signup(email, password, password_confirmation);
       setCurrentUser(response.data);
       setIsAuthenticated(true);
       return response;
@@ -50,7 +62,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await AuthService.logout();
+      await authService.logout();
       setCurrentUser(null);
       setIsAuthenticated(false);
       navigate('/');

@@ -36,6 +36,11 @@ class PileatedApi {
     return response.data;
   };
 
+  postMemberRoute = async (id, route, data) => {
+    const response = await pileatedClient.post(`/${this.pluralModelName()}/${id}/${route}`, { [this.modelName]: data });
+    return response.data;
+  }
+
   uploadImages = async (modelId, modelType, files, onProgress) => {
     const formData = new FormData();
     formData.append("model_id", modelId);

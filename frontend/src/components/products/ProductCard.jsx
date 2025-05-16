@@ -2,11 +2,13 @@
 import { Button, Card, Group, Image, Text } from '@mantine/core';
 
 import { humanizeProductType } from "../../utils/humanizeText.js";
+import { useCart } from "../../context/CartContext.jsx";
 
 const rootURL = import.meta.env.VITE_API_ROOT_URL;
 
-const CarouselCard = ({ cardData }) => {
+const ProductCard = ({ cardData }) => {
   const { images, name, description, productable_type, price } = cardData;
+  const { addToCart } = useCart();
 
   const productTypeText = humanizeProductType(productable_type);
 
@@ -47,10 +49,10 @@ const CarouselCard = ({ cardData }) => {
           </Text>
         </div>
 
-        {/*<Button radius="md">Book now</Button>*/}
+        <Button onClick={() => addToCart(cardData)} radius="md">Add to cart</Button>
       </Group>
     </Card>
   );
 }
 
-export default CarouselCard;
+export default ProductCard;

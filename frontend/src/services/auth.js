@@ -1,6 +1,6 @@
 import pileatedClient from "./pileatedClient.js";
 
-export const AuthService = {
+export const authService = {
   async login(email, password) {
     try {
       const response = await pileatedClient.post('/users/login', {
@@ -37,6 +37,20 @@ export const AuthService = {
       return response.data;
     } catch (error) {
       throw new Error('Signup failed');
+    }
+  },
+
+  async fetchMe() {
+    try {
+      const response = await pileatedClient.get('/users/me');
+      const authToken = response.headers.authorization?.split(' ')[1];
+
+      if (authToken) {
+        storeAuthTokenAndUser(authToken, response.data.data);
+      }
+      return response.data;
+    } catch (error) {
+      //   Handle error if needed
     }
   },
 

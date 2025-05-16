@@ -14,7 +14,26 @@ module Users
       sign_in(resource_name, resource)
       yield resource if block_given?
 
+      guest_token = request.headers['X-Guest-Token']
+
+      if guest_token.present?
+        guest_cart = Cart.find_by(guest_token: guest_token)
+        if guest_cart
+          # Move items from guest cart to user cart
+          user_cart = current_user.cart || Cart.create(user: current_user)
+          guest_cart.transfer_to(user_cart)
+        end
+      end
+
       respond_with resource
+    end
+
+    def me
+      if current_user
+        respond_with current_user
+      else
+        throw(:warden, scope: :user)
+      end
     end
 
     private
