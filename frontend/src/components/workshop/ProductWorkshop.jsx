@@ -5,7 +5,7 @@ import { Modal, Button } from '@mantine/core';
 
 
 import PileatedApi from "../../services/PileatedApi.js";
-import ProductDetails from "../products/ProductDetails.jsx";
+import ProductDetails from "../products/ProductShow.jsx";
 import ImageUploader from "../ui/ImageUploader.jsx";
 
 const productApi = new PileatedApi('product');

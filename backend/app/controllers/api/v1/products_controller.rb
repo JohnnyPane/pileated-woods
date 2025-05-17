@@ -42,9 +42,6 @@ module Api
       end
 
       def productable_params
-        # params.require(:product).require(:productable_attributes).permit(
-        #   :species, :width, :height, :length, :dried, metadata: {}
-        # )
         product_params = params.require(:product)
         product_params.fetch(:productable_attributes, {}).permit(
           :species, :width, :height, :length, :dried, metadata: {}
@@ -60,8 +57,12 @@ module Api
           stock: product.stock,
           featured: product.featured,
           productable_type: product.productable_type,
-          images: product.images.map { |image| rails_blob_url(image, only_path: true) }
-        }
+          productable: product.productable,
+          images: product.image_urls(:default, only_path: true),
+          #   images: {
+            # default: product.image_urls(:default, only_path: true),
+            # thumbnail: product.image_urls(:thumbnail, only_path: true),}
+          }
       end
     end
   end

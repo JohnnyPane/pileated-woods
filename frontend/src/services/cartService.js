@@ -8,6 +8,10 @@ export default class CartService {
     return localStorage.getItem('guestToken');
   }
 
+  guestTokenExists() {
+    return !!localStorage.getItem('guestToken');
+  }
+
   getCartItems() {
     const cartItems = localStorage.getItem('cartItems');
     if (cartItems && cartItems !== 'undefined') {
@@ -126,7 +130,7 @@ export default class CartService {
     }
 
     try {
-      const response = await guestCartApi.get();
+      const response = await guestCartApi.get(guestToken);
       const { cart_items } = response;
       this.saveCartItems(cart_items);
       return response;

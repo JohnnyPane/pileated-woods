@@ -14,6 +14,10 @@ export const CartProvider = ({ children }) => {
   }, []);
 
   const setInitialCart = async () => {
+    if (!cartService.getGuestToken()) {
+      return;
+    }
+
     const response = await cartService.fetchCartFromServer();
     const total = cartService.cartTotal();
     setCart({ items: response?.cart_items || [], total });

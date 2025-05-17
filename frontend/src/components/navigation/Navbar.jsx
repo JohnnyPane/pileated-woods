@@ -17,11 +17,12 @@ function Navbar() {
   const { clearCart } = useCart();
 
   const logoutButton = <Button variant="outline" color="red" onClick={logout}>Logout</Button>;
-  const loginButton = <Link to="/login" className="margin-left">Login</Link>;
+  const loginButton = <Link to="/login" className="margin-left login-button">Login</Link>;
 
   const loginLogoutButton = currentUser ? logoutButton : loginButton;
 
   const items = links.map((link) => {
+    console.log(isAdminUser, "admin user");
     if (link.admin && !isAdminUser) {
       return null;
     }
@@ -38,19 +39,6 @@ function Navbar() {
   });
 
   return (
-    // <nav className="navbar">
-    //   <div className="flex-container flex-row space-between full-width">
-    //     <Link to="/" className="">Sustainable Woodworks</Link>
-    //     <Button onClick={() => clearCart()} className="margin-left" variant="outline" color="blue">Clear Cart</Button>
-    //     <Link to="/cart" className="margin-left">Cart</Link>
-    //     {isAdminUser && workshopButton}
-    //     <div className="margin">
-    //       <Link to="/" className="margin-right">Products</Link>
-    //       {currentUser ? logoutButton : loginButton}
-    //     </div>
-    //   </div>
-    // </nav>
-
     <div>
       <header className={classes.header}>
         <div className="navbar">

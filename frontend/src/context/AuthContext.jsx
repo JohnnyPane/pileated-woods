@@ -42,6 +42,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await authService.login(email, password);
       setCurrentUser(response.data);
+      setIsAdminUser(response.data.admin);
       setIsAuthenticated(true);
       return response;
     } catch (error) {
@@ -53,6 +54,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await authService.signup(email, password, password_confirmation);
       setCurrentUser(response.data);
+      setIsAdminUser(response.data.admin);
       setIsAuthenticated(true);
       return response;
     } catch (error) {
@@ -65,6 +67,7 @@ export const AuthProvider = ({ children }) => {
       await authService.logout();
       setCurrentUser(null);
       setIsAuthenticated(false);
+      setIsAdminUser(false);
       navigate('/');
     } catch (error) {
       throw error;

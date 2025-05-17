@@ -1,4 +1,5 @@
 import '@mantine/core/styles.css';
+import '@mantine/carousel/styles.css';
 import '@fontsource/lora';
 import { createRoot } from 'react-dom/client'
 import { MantineProvider } from '@mantine/core';

@@ -1,46 +1,8 @@
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { Button } from "@mantine/core";
-import './Products.scss';
+import { Accordion } from "@mantine/core";
 
-import { useCart } from "../../context/CartContext.jsx";
-import PileatedApi from "../../services/PileatedApi.js";
+const ProductDetails = ({ product }) => {
+  if (!product) return null;
 
-const productApi = new PileatedApi('product');
-const rootURL = import.meta.env.VITE_API_ROOT_URL;
-
-function ProductDetail({ providedProduct }) {
-  const { id } = useParams();
-  const [product, setProduct] = useState(providedProduct);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const { addToCart } = useCart();
-
-  const fetchProduct = async () => {
-    setLoading(true);
-    try {
-      const response = await productApi.get(id);
-      setProduct(response);
-      setLoading(false);
-    } catch (err) {
-      setError('Failed to fetch product details');
-      setLoading(false);
-      console.error(err);
-    }
-  };
-
-  useEffect(() => {
-
-    if (!providedProduct || providedProduct.id != id) {
-      fetchProduct();
-    }
-  }, [id]);
-
-  if (loading) return <div className="loading">Loading product details...</div>;
-  if (error) return <div className="error">{error}</div>;
-  if (!product) return <div className="error">Product not found</div>;
-
-  // Render product details based on type
   const renderProductSpecifics = () => {
     if (!product.productable) return null;
 
@@ -61,44 +23,15 @@ function ProductDetail({ providedProduct }) {
     }
   };
 
+
   return (
-    <div className="product-detail">
-      <div className="product-detail-container">
-        <div className="product-detail-images">
-          {product.images && product.images.length > 0 ? (
-            <img
-              src={rootURL + product.images[0]}
-              alt={product.name}
-              className="product-detail-image"
-            />
-          ) : (
-            <div className="product-detail-image-placeholder">No image available</div>
-          )}
-        </div>
-
-        <div className="product-detail-info">
-          <h1>{product.name}</h1>
-          <p className="product-detail-price">${product.price}</p>
-          <p className="product-detail-description">{product.description}</p>
-
-          {product.stock > 0 ? (
-            <div className="product-detail-action">
-              <Button onClick={() => addToCart(product)} radius="md">Add to cart</Button>
-              <span className="product-detail-stock">
-                {product.stock} {product.stock === 1 ? 'item' : 'items'} in stock
-              </span>
-            </div>
-          ) : (
-            <div className="product-detail-out-of-stock">
-              <span>Out of Stock</span>
-            </div>
-          )}
-
-          {renderProductSpecifics()}
-        </div>
-      </div>
-    </div>
+    <Accordion defaultValue={product.id}>
+      <Accordion.Item key="details" value="details">
+        <Accordion.Control>{product.name + " Details"}</Accordion.Control>
+        <Accordion.Panel>{renderProductSpecifics()}</Accordion.Panel>
+      </Accordion.Item>
+    </Accordion>
   );
 }
 
-export default ProductDetail;
+export default ProductDetails;

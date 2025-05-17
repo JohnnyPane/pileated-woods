@@ -7,7 +7,7 @@ import { CartProvider } from "./context/CartContext.jsx";
 
 import Home from './components/home/Home';
 import ProductList from './components/products/ProductList';
-import ProductDetails from './components/products/ProductDetails';
+import ProductDetails from './components/products/ProductShow.jsx';
 import Navbar from './components/navigation/Navbar';
 import LoginSignup from './components/auth/LoginSignup';
 import ProductWorkshop from "./components/workshop/ProductWorkshop.jsx";
