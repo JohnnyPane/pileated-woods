@@ -22,7 +22,6 @@ function Navbar() {
   const loginLogoutButton = currentUser ? logoutButton : loginButton;
 
   const items = links.map((link) => {
-    console.log(isAdminUser, "admin user");
     if (link.admin && !isAdminUser) {
       return null;
     }

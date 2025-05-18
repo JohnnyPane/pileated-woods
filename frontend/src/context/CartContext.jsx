@@ -1,4 +1,5 @@
 import {createContext, useContext, useEffect, useState} from "react";
+import { useFlash } from "./FlashContext.jsx";
 
 import CartService from "../services/cartService.js";
 
@@ -8,6 +9,7 @@ export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState(null);
   const [loading, setLoading] = useState(false);
   const cartService = new CartService();
+  const { showNotification } = useFlash();
 
   useEffect(() => {
     setInitialCart();
@@ -42,6 +44,8 @@ export const CartProvider = ({ children }) => {
     setLoading(true);
     const udpatedItems = await cartService.addToCart(item, quantity);
     const total = cartService.cartTotal();
+
+   showNotification({ message: `${item.name} added to cart`, title: "Success", color: "green" });
 
     setCart({ items: udpatedItems, total });
     setLoading(false);

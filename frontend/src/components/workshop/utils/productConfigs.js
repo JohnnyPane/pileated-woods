@@ -1,7 +1,7 @@
 export const LiveEdgeSlabConfig = [
   { label: 'Length',  placeholder: 'Enter length', type: 'number', value: 'length' },
   { label: 'Width', placeholder: 'Enter width', type: 'number', value: 'width' },
-  { label: 'Thickness', placeholder: 'Enter thickness', type: 'number', value: 'thickness' },
+  { label: 'Thickness', placeholder: 'Enter thickness', type: 'number', value: 'height' },
   { label: 'Species', placeholder: 'Enter species', type: 'text', value: 'species' },
   { label: 'Dried', type: 'switch', value: 'dried' }
 ]

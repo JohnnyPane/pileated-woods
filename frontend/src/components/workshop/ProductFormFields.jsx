@@ -66,7 +66,7 @@ const ProductFormFields = ({ productType, form }) => {
                 label={label}
                 placeholder={placeholder}
                 value={fieldValue}
-                onChange={(value) => form.setFieldValue(`product.productable_attributes.${value}`, value)}
+                onChange={(eventValue) => form.setFieldValue(`product.productable_attributes.${value}`, eventValue)}
               />
             );
           case 'switch':
