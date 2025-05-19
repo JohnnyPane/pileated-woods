@@ -53,8 +53,6 @@ const ProductWorkshop = () => {
         </div>
       </Modal>
 
-      <Button onClick={() => console.log(product)} variant="outline" color="blue">Log Product</Button>
-
       <Button onClick={open} variant="outline" color="blue">
         Upload Images
       </Button>

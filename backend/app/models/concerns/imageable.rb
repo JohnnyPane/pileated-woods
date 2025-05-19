@@ -8,6 +8,7 @@ module Imageable
   IMAGE_SIZES = {
     default: [400, 500],
     thumbnail: [200, 250],
+    cart: [100, 125],
   }.freeze
 
   def image_variants(size_key = :default)
@@ -21,5 +22,13 @@ module Imageable
     image_variants(size_key).map do |image|
       Rails.application.routes.url_helpers.rails_blob_url(image, only_path: only_path)
     end
+  end
+
+  def thumbnail_image_urls
+    image_urls(:thumbnail)
+  end
+
+  def cart_image_urls
+    image_urls(:cart)
   end
 end

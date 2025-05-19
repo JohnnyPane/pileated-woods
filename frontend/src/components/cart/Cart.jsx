@@ -1,9 +1,11 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useCart from "../../context/CartContext";
-import {Button} from "@mantine/core";
+import { Button, Divider } from '@mantine/core';
+import CartItem from "./CartItem.jsx";
+import CartSummary from "./CartSummary.jsx";
 
-const Cart = () => {
-  const { cart, loading, removeFromCart, updateQuantity, cartTotal } = useCart();
+const Cart = ({ close = () => null, checkout = false }) => {
+  const { cart, loading, removeFromCart, cartTotal } = useCart();
 
   const navigate = useNavigate();
 
@@ -15,25 +17,40 @@ const Cart = () => {
     return <div>Your cart is empty.</div>;
   }
 
+  const { items } = cart;
+
+  const cartTotalDisplay = `$${cartTotal().toFixed(2)}`;
+
+  const handleGoToCheckout = () => {
+    close();
+    navigate('/checkout');
+  }
+
+  const goToCheckout = () => {
+    return (
+      <div className="flex-container flex-column margin-t-80">
+        <span className="label-small margin-bottom">Shipping & taxes calculated at checkout</span>
+        <Button onClick={handleGoToCheckout} radius={0} className="full-width">
+          <span className="margin-right">Go to Checkout</span>
+          <span className="margin-right margin-left">|</span>
+          <span className="margin-left">{cartTotalDisplay}</span>
+        </Button>
+      </div>
+    )
+  }
+
   return (
-    <div>
-      <h1>Your Cart</h1>
-      <ul>
-        {cart.items.map(cartItem => (
-          <li key={cartItem.id}>
-            <Link to={`/product/${cartItem.product_id}`}>{cartItem.product.name}</Link>
-            {/*<span> - ${item.price.toFixed(2)}</span>*/}
-            <input
-              type="number"
-              value={cartItem.quantity}
-              onChange={(e) => updateQuantity(cartItem.id, e.target.value)}
-            />
-            <button onClick={() => removeFromCart(cartItem.id)}>Remove</button>
-          </li>
-        ))}
-      </ul>
-      <h2>Total: ${cartTotal()}</h2>
-      <Button onClick={() => navigate('/checkout')}>Go to Checkout</Button>
+    <div className="double-padding">
+      {items.map(cartItem => (
+        <div key={cartItem.id}>
+
+          <CartItem item={cartItem} onRemove={removeFromCart} close={close}/>
+
+          <Divider my="sm"/>
+        </div>
+      ))}
+
+      {checkout ? (<CartSummary />) : (goToCheckout())}
     </div>
   );
 }

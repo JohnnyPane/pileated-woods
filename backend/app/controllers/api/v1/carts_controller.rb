@@ -4,7 +4,7 @@ module Api
       include Cartable
       before_action :set_cart
       def show
-        render json: @cart, include: [cart_items: { include: :product }], status: :ok
+        render json: cart_as_json(@cart), status: :ok
       end
 
       def create

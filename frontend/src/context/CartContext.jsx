@@ -7,6 +7,7 @@ const CartContext = createContext(null);
 
 export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState(null);
+  const [cartCount, setCartCount] = useState(0);
   const [loading, setLoading] = useState(false);
   const cartService = new CartService();
   const { showNotification } = useFlash();
@@ -14,6 +15,13 @@ export const CartProvider = ({ children }) => {
   useEffect(() => {
     setInitialCart();
   }, []);
+
+  useEffect(() => {
+    if (cart) {
+      const totalItems = cart.items.reduce((acc, item) => acc + item.quantity, 0);
+      setCartCount(totalItems);
+    }
+  }, [cart]);
 
   const setInitialCart = async () => {
     if (!cartService.getGuestToken()) {
@@ -126,6 +134,7 @@ export const CartProvider = ({ children }) => {
   const value = {
     cart,
     loading,
+    cartCount,
     addToCart,
     removeFromCart,
     updateQuantity,

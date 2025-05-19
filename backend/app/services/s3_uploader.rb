@@ -10,5 +10,8 @@ class S3Uploader
     object = bucket.object(key)
     object.upload_file(file, acl: 'public-read')
     object.public_url
+  rescue Aws::S3::Errors::ServiceError => e
+    Rails.logger.error "S3 upload failed: #{e.message}"
+    nil
   end
 end

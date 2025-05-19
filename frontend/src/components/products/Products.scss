@@ -121,6 +121,8 @@
 .product-detail-description {
   margin: 1rem 0;
   line-height: 1.6;
+  font-size: 0.85rem;
+  color: #555;
 }
 
 .product-detail-action {
@@ -133,3 +135,18 @@
   font-size: 1.2rem;
   margin-left: 1rem;
 }
+
+.sub-header-1 {
+  font-style: italic;
+}
+
+.accordion-panel-header {
+  font-size: 0.9rem;
+}
+
+.product-detail-add-to-cart {
+  height: 45px;
+  margin-left: 1rem;
+  font-size: 1rem;
+}
+

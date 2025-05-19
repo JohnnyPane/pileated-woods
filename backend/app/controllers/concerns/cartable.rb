@@ -12,4 +12,18 @@ module Cartable
   def guest_token
     request.headers['X-Guest-Token']
   end
+
+  def cart_as_json(cart)
+    cart.as_json(
+      include: {
+        cart_items: {
+          include: {
+            product: {
+              methods: [:cart_image_urls]
+            }
+          }
+        }
+      }
+    )
+  end
 end

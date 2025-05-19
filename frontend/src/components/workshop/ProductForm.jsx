@@ -54,7 +54,6 @@ const ProductForm = ({ editMode = false, productId = null }) => {
   const onSubmit = async (values) => {
     try {
       const response = await productApi.create(values.product);
-      console.log('Product created:', response);
       navigate('/workshop/products/' + response.id);
     } catch (error) {
       console.error('Error creating product:', error);

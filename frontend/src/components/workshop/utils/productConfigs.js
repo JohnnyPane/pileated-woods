@@ -18,3 +18,8 @@ export const PRODUCT_FORM_CONFIGS = {
 export const getProductFormConfig = (productType) => {
   return PRODUCT_FORM_CONFIGS[productType] || [];
 }
+
+export const productTypeDisplayName = {
+  'LiveEdgeSlab': 'Live Edge Slab',
+  'CustomProduct': 'Custom Product'
+}

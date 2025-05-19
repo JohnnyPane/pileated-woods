@@ -1,6 +1,6 @@
 import { TextInput, Checkbox, Textarea, NumberInput } from "@mantine/core";
 
-const FormInput = ({ label, placeholder, required, type, value, onChange, error, hidden = false }) => {
+const FormInput = ({ label, placeholder, required, type, value, onChange, error, hidden = false, small = false }) => {
   const formComponent = formInputDelegator[type];
 
   if (!formComponent) {
@@ -11,6 +11,8 @@ const FormInput = ({ label, placeholder, required, type, value, onChange, error,
     return null;
   }
 
+  const className = small ? "small-input" : "";
+
   return formComponent({
     label,
     placeholder,
@@ -18,11 +20,12 @@ const FormInput = ({ label, placeholder, required, type, value, onChange, error,
     type,
     value,
     onChange,
-    error
+    error,
+    className,
   });
 }
 
-const TextInputField = ({ label, placeholder, required, type, value, onChange, error }) => {
+const TextInputField = ({ label, placeholder, required, type, value, onChange, error, ...rest }) => {
   return (
     <TextInput
       label={label}
@@ -32,11 +35,12 @@ const TextInputField = ({ label, placeholder, required, type, value, onChange, e
       value={value}
       onChange={onChange}
       error={error}
+      {...rest}
     />
   );
 }
 
-const TextareaField = ({ label, placeholder, required, value, onChange, error }) => {
+const TextareaField = ({ label, placeholder, required, value, onChange, error, ...rest }) => {
   return (
     <Textarea
       label={label}
@@ -45,11 +49,12 @@ const TextareaField = ({ label, placeholder, required, value, onChange, error })
       value={value}
       onChange={onChange}
       error={error}
+      {...rest}
     />
   );
 }
 
-const NumberInputField = ({ label, placeholder, required, value, onChange, error }) => {
+const NumberInputField = ({ label, placeholder, required, value, onChange, error, ...rest }) => {
   return (
     <NumberInput
       label={label}
@@ -58,6 +63,7 @@ const NumberInputField = ({ label, placeholder, required, value, onChange, error
       value={value}
       onChange={onChange}
       error={error}
+      {...rest}
     />
   );
 }
@@ -68,6 +74,7 @@ const CheckboxField = ({ label, checked, onChange }) => {
       label={label}
       checked={checked}
       onChange={onChange}
+      className="margin-top"
     />
   );
 }

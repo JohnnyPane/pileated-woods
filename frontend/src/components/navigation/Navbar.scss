@@ -8,8 +8,25 @@
 }
 
 .login-button {
-  color: saddlebrown;
-  border-radius: 5px;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
+  display: flex;
+  font-weight: 700;
+  align-items: center;
+  background: none;
+}
+
+.cart-button {
+  display: flex;
+  font-weight: 700;
+  align-items: center;
+  background: transparent;
+  border: 1px solid transparent;
+
+  &:hover {
+    border: 1px solid transparent;
+    color: #747bff;
+  }
+}
+
+.nav-link {
+  font-weight: 700;
 }

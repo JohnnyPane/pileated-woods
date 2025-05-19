@@ -5,39 +5,21 @@ import './utility.scss'
 import { AuthProvider, useAuth } from "./context/AuthContext.jsx";
 import { CartProvider } from "./context/CartContext.jsx";
 
+import AdminRoute from "./components/workshop/AdminRoute.jsx";
 import Home from './components/home/Home';
 import ProductList from './components/products/ProductList';
-import ProductDetails from './components/products/ProductShow.jsx';
+import ProductShow from './components/products/ProductShow.jsx';
 import Navbar from './components/navigation/Navbar';
 import LoginSignup from './components/auth/LoginSignup';
 import ProductWorkshop from "./components/workshop/ProductWorkshop.jsx";
-import Unauthorized from "./components/auth/Unauthorized.jsx";
 import Workshop from "./components/workshop/Workshop.jsx";
 import StripeProvider from "./components/StripeProvider.jsx";
 import Checkout from "./components/cart/Checkout.jsx";
 import Cart from "./components/cart/Cart.jsx";
 import AuthWrapper from "./components/auth/AuthWrapper.jsx";
 import Order from "./components/cart/Order.jsx";
+import Orders from "./components/workshop/Orders.jsx";
 
-
-const AdminRoute = ({ element }) => {
-  const { currentUser, isAdminUser, loading } = useAuth();
-  const navigate = useNavigate();
-
-  if (loading) {
-    return <div className="loading">Loading...</div>;
-  }
-
-  if (!currentUser) {
-    return navigate('/login');
-  }
-
-  if (!isAdminUser) {
-    return <Unauthorized />;
-  }
-
-  return element;
-};
 
 function App() {
   return (
@@ -52,7 +34,7 @@ function App() {
                   <Route path="/" element={<Home />} />
                   <Route path="/login" element={<LoginSignup />} />
                   <Route path="/products" element={<ProductList />} />
-                  <Route path="/products/:id" element={<ProductDetails />} />
+                  <Route path="/products/:id" element={<ProductShow />} />
                   <Route path="/cart" element={<Cart />} />
                   <Route path="/checkout" element={
                     <StripeProvider>
@@ -62,8 +44,9 @@ function App() {
 
                   <Route path="/order/:orderId" element={<Order />} />
 
-                  <Route path="workshop/products/:id" element={<AdminRoute element={<ProductWorkshop />} />} />
                   <Route path="workshop" element={<AdminRoute element={<Workshop />} />} />
+                  <Route path="workshop/products/:id" element={<AdminRoute element={<ProductWorkshop />} />} />
+                  <Route path="workshop/orders" element={<AdminRoute element={<Orders />} />} />
                 </Routes>
               </div>
             </main>

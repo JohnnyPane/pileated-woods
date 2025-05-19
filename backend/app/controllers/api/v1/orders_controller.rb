@@ -6,7 +6,7 @@ module Api
 
       def index
         if user_signed_in?
-          @orders = current_user.orders.order(created_at: :desc)
+          @orders = current_user.admin? ? orders_as_list_json : current_user.orders.order(created_at: :desc)
         else
           if params[:customer_email].present?
             @orders = Order.where(customer_email: params[:customer_email]).order(created_at: :desc)
@@ -56,7 +56,7 @@ module Api
             if payment_intent.status == 'succeeded'
               @order.update(
                 stripe_payment_id: payment_intent.id,
-                status: :completed
+                status: :paid
               )
 
               @cart.cart_items.destroy_all
@@ -92,6 +92,11 @@ module Api
 
       def set_cart_token
         @cart_token = request.headers['X-Guest-Token']
+      end
+
+      def orders_as_list_json
+        @orders = Order.all.includes(:shipping_address, :order_items).order(created_at: :desc)
+        OrderSerializer.new(@orders).serializable_hash[:data].map { |o| o[:attributes] }
       end
 
       def order_params

@@ -15,7 +15,7 @@
     display: block;
     line-height: 1;
     padding: 8px 12px;
-    margin-right: 4rem  ;
+    margin-right: 2rem;
     border-radius: var(--mantine-radius-sm);
     text-decoration: none;
     color: light-dark(var(--mantine-color-gray-7), var(--mantine-color-dark-0));

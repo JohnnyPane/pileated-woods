@@ -1,0 +1,29 @@
+.number-plus-minus-input {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  height: 45px;
+}
+
+.number-plus-minus-input input {
+  width: 50px;
+  text-align: center;
+  border: none;
+}
+
+.number-plus-minus-input button {
+  background: none;
+  border: none;
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.no-spinner::-webkit-outer-spin-button,
+.no-spinner::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.no-spinner {
+  -moz-appearance: textfield;
+}

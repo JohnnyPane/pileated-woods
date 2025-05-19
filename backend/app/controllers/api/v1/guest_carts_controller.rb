@@ -1,10 +1,11 @@
 module Api
   module V1
     class GuestCartsController < ApplicationController
+      include Cartable
       before_action :set_cart, only: [:show, :add_item, :remove_item, :update_quantity]
 
       def show
-        render json: @cart, include: [cart_items: { include: :product }], status: :ok
+        render json: cart_as_json(@cart), status: :ok
       end
 
       def create
@@ -60,10 +61,6 @@ module Api
 
       def guest_cart_params
         params.require(:guest_cart).permit(:guest_token, :product_id, :quantity, :cart_item_id)
-      end
-
-      def cart_as_json(cart)
-        cart.as_json(include: { cart_items: { include: :product } })
       end
 
     end

@@ -10,12 +10,11 @@ const ProductDetails = ({ product }) => {
       case 'LiveEdgeSlab':
         return (
           <div className="product-specifics">
-            <h3>Live Edge Details</h3>
-            <p><strong>Material:</strong> {product.productable.species}</p>
-            <p><strong>Length:</strong> {product.productable.length}</p>
-            <p><strong>Width:</strong> {product.productable.width}</p>
-            <p><strong>Height:</strong> {product.productable.height}</p>
-            <p><strong>Dried:</strong> {product.productable.dried}</p>
+            <p>Material: {product.productable.species}</p>
+            <p>Length: {product.productable.length}"</p>
+            <p>Width: {product.productable.width}"</p>
+            <p>Height: {product.productable.height}"</p>
+            <p>{product.productable.dried ? "Dried" : "Raw"}</p>
           </div>
         );
       default:
@@ -27,8 +26,8 @@ const ProductDetails = ({ product }) => {
   return (
     <Accordion defaultValue={product.id}>
       <Accordion.Item key="details" value="details">
-        <Accordion.Control>{product.name + " Details"}</Accordion.Control>
-        <Accordion.Panel>{renderProductSpecifics()}</Accordion.Panel>
+        <Accordion.Control className="accordion-panel-header">DETAILS</Accordion.Control>
+        <Accordion.Panel className="product-detail-description">{renderProductSpecifics()}</Accordion.Panel>
       </Accordion.Item>
     </Accordion>
   );
