@@ -37,7 +37,7 @@ function Navbar() {
         to={link.link}
         className={classes.link}
       >
-        <div className="flex-container flex-row nav-link">
+        <div className="flex row nav-link">
           {link.icon} {link.label}
         </div>
       </Link>

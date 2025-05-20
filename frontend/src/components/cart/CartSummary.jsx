@@ -1,8 +1,9 @@
 import useCart from "../../context/CartContext";
+import { moneyDisplay } from "../../utils/humanizeText.js";
 
 
 const CartSummary = () => {
-  const { cart, loading, cartTotal } = useCart();
+  const { cart, loading, cartTotalDisplay } = useCart();
 
   if (loading) {
     return <div>Loading cart...</div>;
@@ -12,15 +13,13 @@ const CartSummary = () => {
     return <div>Your cart is empty.</div>;
   }
 
-  const cartTotalDisplay = `$${cartTotal().toFixed(2)}`;
-
   return (
     <div className="cart-summary">
       <h3>Cart Summary</h3>
       <ul>
         {cart.items.map(item => (
           <li key={item.id}>
-            {item.product.name} - ${item.product.price.toFixed(2)} x {item.quantity}
+            {item.product.name} - {moneyDisplay(item.product.price)} x {item.quantity}
           </li>
         ))}
       </ul>

@@ -1,6 +1,6 @@
 import { TextInput, Checkbox, Textarea, NumberInput } from "@mantine/core";
 
-const FormInput = ({ label, placeholder, required, type, value, onChange, error, hidden = false, small = false }) => {
+const FormInput = ({ label, placeholder, required, type, value, onChange, error, hidden = false, small = false, description }) => {
   const formComponent = formInputDelegator[type];
 
   if (!formComponent) {
@@ -21,11 +21,12 @@ const FormInput = ({ label, placeholder, required, type, value, onChange, error,
     value,
     onChange,
     error,
+    description,
     className,
   });
 }
 
-const TextInputField = ({ label, placeholder, required, type, value, onChange, error, ...rest }) => {
+const TextInputField = ({ label, description, placeholder, required, type, value, onChange, error, ...rest }) => {
   return (
     <TextInput
       label={label}
@@ -35,6 +36,7 @@ const TextInputField = ({ label, placeholder, required, type, value, onChange, e
       value={value}
       onChange={onChange}
       error={error}
+      description={description}
       {...rest}
     />
   );

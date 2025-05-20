@@ -17,7 +17,7 @@ const formInputs = [
   { name: 'customer_email', label: 'Email', type: 'text', required: true, gridSize: 6 },
   { name: 'phone', label: 'Phone', type: 'text', required: false, gridSize: 6 },
   { name: 'shipping_address.address_1', label: 'Shipping Address', type: 'text', required: true },
-  { name: 'shipping_address.address_2', label: 'Address Line 2', type: 'text', required: true, gridSize: 6 },
+  { name: 'shipping_address.address_2', label: 'Address Line 2', type: 'text', required: false, gridSize: 6 },
   { name: 'shipping_address.city', label: 'City', type: 'text', required: true, gridSize: 6  },
   { name: 'shipping_address.state', label: 'State', type: 'text', required: true, gridSize: 6  },
   { name: 'shipping_address.zip', label: 'Zip Code', type: 'text', required: true, gridSize: 6  },
@@ -32,7 +32,7 @@ const formInputs = [
 ];
 
 const CheckoutDetails = () => {
-  const { cart, loading, clearCart } = useCart();
+  const { cart, loading, clearCart, cartTotalDisplay } = useCart();
   const { isAuthenticated, currentUser } = useAuth();
   const stripe = useStripe();
   const elements = useElements();
@@ -96,10 +96,6 @@ const CheckoutDetails = () => {
 
   if (!cart || cart.items.length === 0) {
     return <div>Your cart is empty. <Link to="/">Continue Shopping</Link></div>;
-  }
-
-  const calculateTotal = () => {
-    return cart.items.reduce((total, item) => total + item.product.price * item.quantity, 0);
   }
 
   const handleSubmit = async (e) => {
@@ -190,7 +186,7 @@ const CheckoutDetails = () => {
 
         {error && <div className="error">{error}</div>}
         <Button type="submit" color="violet" disabled={!stripe || !elements || processing} className="margin-40-t full-width">
-          {processing ? "Processing..." : `Pay $${calculateTotal().toFixed(2)}`}
+          {processing ? "Processing..." : `Pay $${cartTotalDisplay}`}
         </Button>
       </form>
 

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { Image } from "@mantine/core";
 
-import { humanizeProductType } from "../../utils/humanizeText.js";
+import { humanizeProductType, moneyDisplay } from "../../utils/humanizeText.js";
 import { useIsAdminRoute} from "../../context/AdminRouteContext.jsx";
 
 const rootURL = import.meta.env.VITE_API_ROOT_URL;
@@ -22,11 +22,6 @@ const ProductCard = ({ cardData }) => {
       navigate(`/products/${cardData.id}`);
     }
   }
-
-  const priceDisplay = price.toLocaleString('en-US', {
-    style: 'currency',
-    currency: 'USD',
-  })
 
   const handleCardEnter = () => {
     if (images.length > 1) {
@@ -48,9 +43,9 @@ const ProductCard = ({ cardData }) => {
         />
       </div>
 
-      <div className="flex-container flex-row space-between">
+      <div className="flex row space-between">
         <span>{name}</span>
-        <span className="bold">{priceDisplay}</span>
+        <span className="bold">{moneyDisplay(price)}</span>
       </div>
 
       <div className="italic saddle-brown">{productTypeText}</div>

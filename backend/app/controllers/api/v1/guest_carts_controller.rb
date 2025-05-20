@@ -20,7 +20,16 @@ module Api
         if @cart.add_item(product_id, quantity)
           render json: cart_as_json(@cart), status: :ok
         else
-          render json: { error: 'Unable to add item to cart' }, status: :unprocessable_entity
+          product = Product.find(product_id)
+          message = if product.nil?
+                      'Product not found'
+                    elsif product.stock < quantity
+                      'Insufficient stock'
+                    else
+                      'Unable to add item to cart'
+                    end
+
+          render json: { error: message }, status: :unprocessable_entity
         end
       end
 

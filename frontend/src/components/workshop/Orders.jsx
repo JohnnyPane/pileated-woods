@@ -14,7 +14,6 @@ const Orders = () => {
     const fetchOrders = async () => {
       try {
         const response = await orderApi.query({ page: 1, per_page: 100 });
-        console.log('Fetched orders:', response);
         setOrders(response);
       } catch (error) {
         console.error('Error fetching orders:', error);

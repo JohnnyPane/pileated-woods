@@ -12,7 +12,7 @@ const LoginSignup = () => {
   };
 
   return (
-    <div className="center-content flex-column">
+    <div className="center-content column">
       {isLogin ? (<LoginForm />) : (<SignupForm />)}
       <Button onClick={toggleForm} variant="outline" mt="md">
         {isLogin ? "Don't have an account? Sign up" : "Already have an account? Log in"}

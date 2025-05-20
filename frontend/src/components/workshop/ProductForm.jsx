@@ -19,7 +19,7 @@ const productTypes = [
 const productInputs = [
   { name: 'name', label: 'Name', type: 'text', value: 'product.name' },
   { name: 'description', label: 'Description', type: 'textarea', value: 'product.description' },
-  { name: 'price', label: 'Price', type: 'number', value: 'product.price' },
+  { name: 'price', label: 'Price', type: 'number', value: 'product.price', description: 'ENTER PRICE IN CENTS' },
   { name: 'stock', label: 'Stock', type: 'number', value: 'product.stock' },
   { name: 'featured', label: 'Featured', type: 'checkbox', value: 'product.featured' },
 ]
@@ -119,6 +119,7 @@ const ProductForm = ({ editMode = false, product = null, close = () => {} }) => 
                   type={input.type}
                   {...form.getInputProps(`product.${input.name}`, { type: 'type' })}
                   error={form.errors[input.name]}
+                  description={input.description || ''}
                 />
               ))}
             </Fieldset>

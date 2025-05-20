@@ -2,6 +2,7 @@ import {createContext, useContext, useEffect, useState} from "react";
 import { useFlash } from "./FlashContext.jsx";
 
 import CartService from "../services/cartService.js";
+import { moneyDisplay } from "../utils/humanizeText.js";
 
 const CartContext = createContext(null);
 
@@ -50,10 +51,8 @@ export const CartProvider = ({ children }) => {
     }
 
     setLoading(true);
-    const udpatedItems = await cartService.addToCart(item, quantity);
+    const udpatedItems = await cartService.addToCart(item, quantity, showNotification);
     const total = cartService.cartTotal();
-
-   showNotification({ message: `${item.name} added to cart`, title: "Success", color: "green" });
 
     setCart({ items: udpatedItems, total });
     setLoading(false);
@@ -131,10 +130,13 @@ export const CartProvider = ({ children }) => {
     return cart.items.reduce((total, item) => total + item.product.price * item.quantity, 0);
   }
 
+  const cartTotalDisplay = cart ? moneyDisplay(cartTotal()) : "$0.00";
+
   const value = {
     cart,
     loading,
     cartCount,
+    cartTotalDisplay,
     addToCart,
     removeFromCart,
     updateQuantity,

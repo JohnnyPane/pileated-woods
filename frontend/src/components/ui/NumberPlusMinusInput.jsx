@@ -7,7 +7,6 @@ const NumberPlusMinusInput = ({ value, onChange, min, max, upperLimitMessage }) 
     if (value < max) {
       onChange(value + 1);
     } else {
-      console.log("Max quantity reached");
       showNotification({
         title: "Max quantity reached",
         message: upperLimitMessage || "You have reached the maximum quantity.",

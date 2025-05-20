@@ -13,6 +13,9 @@ class Cart < ApplicationRecord
 
 
   def add_item(product_id, quantity = 1)
+    product = Product.find(product_id)
+    return false unless product && product.stock >= quantity
+
     cart_item = cart_items.find_or_initialize_by(product_id: product_id)
     cart_item.quantity = quantity
     cart_item.save

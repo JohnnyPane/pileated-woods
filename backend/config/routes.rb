@@ -32,7 +32,7 @@ Rails.application.routes.draw do
         end
       end
       resources :live_edge_slabs, controller: 'products', type: 'LiveEdgeSlab'
-      resources :orders, only: [:index, :show, :create]
+      resources :orders, only: [:index, :show, :create, :update, :destroy]
       resources :products, only: [:index, :show, :create, :update, :destroy]
       resources :uploads, only: [:create, :destroy]
 

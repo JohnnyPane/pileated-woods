@@ -54,7 +54,7 @@ export default class CartService {
     return guestToken;
   }
 
-  async addToCart(product, quantity = 1) {
+  async addToCart(product, quantity = 1, showNotification) {
     let cartItems;
     const existingCartItems = this.getCartItems();
     const existingItem = existingCartItems.find(item => item.product_id === product.id);
@@ -69,12 +69,14 @@ export default class CartService {
         });
         cartItems = updatedCart.cart_items;
         this.saveCartItems(cartItems);
+        showNotification({ message: `${product.name} added to cart`, title: "Success", color: "green" });
       } else {
         await this.initializeCart();
         return this.addToCart(product, quantity);
       }
     } catch (error) {
-      console.error("Error adding item to cart:", error);
+      showNotification({ message: "Error adding item to cart: " + error.response.data.error, title: "Error", color: "red" });
+      cartItems = existingCartItems;
     }
 
     return cartItems

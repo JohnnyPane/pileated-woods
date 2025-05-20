@@ -6,6 +6,7 @@ import { Button, Image, Accordion, Modal } from "@mantine/core";
 import './Products.scss';
 
 import { productTypeDisplayName } from "../workshop/utils/productConfigs.js";
+import { moneyDisplay } from "../../utils/humanizeText.js";
 import { useCart } from "../../context/CartContext.jsx";
 import { useIsAdminRoute } from "../../context/AdminRouteContext.jsx";
 import { useAuth } from "../../context/AuthContext.jsx";
@@ -107,7 +108,6 @@ function ProductShow({ providedProduct }) {
         <div className="product-detail-info">
           <h1 className="header-1">{product.name}</h1>
           <p className="sub-header-1">{productTypeDisplayName[product.productable_type]}</p>
-          {/*<p className="product-detail-price">${product.price}</p>*/}
           <Accordion defaultValue="description">
             <Accordion.Item key="description" value="description">
               <Accordion.Control value="description" className="accordion-panel-header">DESCRIPTION</Accordion.Control>
@@ -116,6 +116,10 @@ function ProductShow({ providedProduct }) {
 
             <ProductDetails product={product} />
           </Accordion>
+
+          <div className="product-detail-price">
+            <span className="label-large padding-left">{moneyDisplay(product.price)}</span>
+          </div>
 
           <div className="product-detail-action">
             {!displayAdminComponents && stockDisplay}

@@ -1,4 +1,4 @@
-.flex-container {
+.flex {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -8,11 +8,11 @@
   justify-content: space-between;
 }
 
-.flex-row {
+.row {
   flex-direction: row;
 }
 
-.flex-column {
+.column {
   flex-direction: column;
 }
 
@@ -42,12 +42,20 @@
   align-items: flex-start;
 }
 
+.align-right {
+  align-items: flex-end;
+}
+
 .to-top {
   align-items: flex-start;
 }
 
 .margin {
   margin: 0.5rem;
+}
+
+.margin-none {
+  margin: 0;
 }
 
 .margin-top {
@@ -88,6 +96,10 @@
 
 .padding {
   padding: 0.5rem;
+}
+
+.padding-none {
+  padding: 0;
 }
 
 .double-padding {
@@ -150,7 +162,7 @@
   font-size: 0.7rem;
 }
 
-.label-header {
+.label-large {
   font-size: 0.9rem;
 }
 

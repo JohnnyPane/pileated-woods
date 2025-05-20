@@ -3,6 +3,7 @@ module Api
     class OrdersController < ApplicationController
       before_action :authenticate_user!, only: [:index]
       before_action :set_cart_token, :set_cart, only: [:create]
+      before_action :ensure_admin!, only: [:index, :update, :destroy]
 
       def index
         if user_signed_in?
@@ -56,7 +57,8 @@ module Api
             if payment_intent.status == 'succeeded'
               @order.update(
                 stripe_payment_id: payment_intent.id,
-                status: :paid
+                status: :processing,
+                paid: true,
               )
 
               @cart.cart_items.destroy_all
@@ -73,6 +75,26 @@ module Api
           end
         else
           render json: { error: @order.errors.full_messages }, status: :unprocessable_entity
+        end
+      end
+
+      def update
+        @order = Order.find(params[:id])
+
+        if @order.update(order_params)
+          render json: @order
+        else
+          render json: { error: @order.errors.full_messages }, status: :unprocessable_entity
+        end
+      end
+
+      def destroy
+        @order = Order.find(params[:id])
+
+        if !@order.paid && @order.destroy
+          render json: { message: 'Order deleted successfully' }, status: :ok
+        else
+          render json: { error: 'Failed to delete order' }, status: :unprocessable_entity
         end
       end
 
@@ -105,6 +127,7 @@ module Api
           :customer_email,
           :phone,
           :billing_same_as_shipping,
+          :status,
         )
       end
 

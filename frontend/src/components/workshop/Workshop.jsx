@@ -8,7 +8,7 @@ const Workshop = () => {
 
   return (
     <div>
-      <div className="flex-container flex-row space-between">
+      <div className="flex row space-between">
         <div>
           <h1>Workshop</h1>
           <p>Welcome to the workshop page!</p>

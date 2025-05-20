@@ -15,3 +15,4 @@ Things you may want to cover:
 4. About page 
 5. Cart cleanup service 
 6. Add filters and pagination to products page
+7. Add Email service for purchases
