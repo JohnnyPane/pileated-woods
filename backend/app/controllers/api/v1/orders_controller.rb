@@ -27,7 +27,7 @@ module Api
         end
 
         if @order
-          render json: @order, include: [order_items: { include: :product }]
+          render json: @order.to_json_with_associations(:cart_image_urls), status: :ok
         else
           render json: { error: 'Order not found' }, status: :not_found
         end
@@ -141,6 +141,10 @@ module Api
         params.require(:order).require(:billing_address_attributes).permit(
           :address_1, :address_2, :city, :state, :zip, :country
         )
+      end
+
+      def order_to_json(order)
+
       end
     end
   end

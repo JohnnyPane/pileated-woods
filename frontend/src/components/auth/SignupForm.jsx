@@ -55,9 +55,9 @@ const SignupForm = () => {
           placeholder="Confirm your password"
           {...form.getInputProps('passwordConfirm')}
         />
-        <Group position="apart" mt="md">
-          <Button type="submit">Sign Up</Button>
-        </Group>
+        <div>
+          <Button type="submit" className="full-width margin-40-t">Sign Up</Button>
+        </div>
       </form>
     </Card>
   );

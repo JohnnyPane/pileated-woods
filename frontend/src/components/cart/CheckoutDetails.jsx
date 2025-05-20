@@ -144,7 +144,7 @@ const CheckoutDetails = () => {
       });
 
       clearCart();
-      navigate(`/order/${response.id}`, { replace: true });
+      navigate(`/orders/${response.id}`, { replace: true });
     } catch (error) {
       setError("An error occurred while processing your order. Please try again.");
       setProcessing(false);

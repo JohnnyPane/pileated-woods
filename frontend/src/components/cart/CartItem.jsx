@@ -8,7 +8,7 @@ import { moneyDisplay } from "../../utils/humanizeText.js";
 const rootURL = import.meta.env.VITE_API_ROOT_URL;
 
 
-const CartItem = ({ item, onRemove, close }) => {
+const CartItem = ({ item, onRemove, close, displayOnly = false }) => {
   const { product } = item;
 
   const handleRemove = () => {
@@ -30,7 +30,7 @@ const CartItem = ({ item, onRemove, close }) => {
 
       <div className="flex column full-height space-between align-right">
         <span className="bold label">{moneyDisplay(product.price)}</span>
-        <IconTrash onClick={handleRemove} size={20} className=" clickable" color="red"/>
+        {displayOnly && <IconTrash onClick={handleRemove} size={20} className=" clickable" color="red"/>}
       </div>
     </div>
   );

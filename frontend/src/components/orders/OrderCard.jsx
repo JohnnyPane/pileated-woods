@@ -1,20 +1,14 @@
 import React, { useState } from 'react';
-import { Card, Progress, Text, Select, Modal, Button } from '@mantine/core';
+import { Card, Text, Select, Modal, Button } from '@mantine/core';
 import { useDisclosure } from "@mantine/hooks";
 
 import { useFlash } from "../../context/FlashContext.jsx";
 import { humanizeRailsDate, moneyDisplay } from '../../utils/humanizeText.js';
+import { orderStatusConfig } from "../../utils/orderStatusConfig.js";
 import PileatedApi from "../../services/PileatedApi.js";
+import OrderStatusProgress from "./OrderStatusProgress.jsx";
 
 const orderApi = new PileatedApi('order');
-
-const statusStats = {
-  pending: { label: 'Pending', progress: 25, color: 'yellow' },
-  processing: { label: 'Processing', progress: 50, color: 'blue' },
-  shipped: { label: 'Shipped', progress: 75, color: 'orange' },
-  completed: { label: 'Completed', progress: 100, color: 'green' },
-  canceled: { label: 'Canceled', progress: 100, color: 'red'},
-}
 
 const orderStatusMap = {
   pending: 'Pending',
@@ -30,7 +24,7 @@ const OrderCard = ({ order }) => {
   const [opened, { open, close }] = useDisclosure(false);
   const { showNotification } = useFlash();
 
-  const orderStats = statusStats[orderData.status];
+  const orderConfig = orderStatusConfig[orderData.status];
 
   const updateOrderStatus = async () => {
     try {
@@ -53,7 +47,7 @@ const OrderCard = ({ order }) => {
   }
 
   return (
-    <Card shadow="xs" key={orderStats.label}>
+    <Card shadow="xs" key={orderConfig.label}>
       <div className="flex row space-between margin-bottom">
         <Text c="dimmed" size="xs" fw={700} className="margin-right">
           Order ID:
@@ -86,13 +80,13 @@ const OrderCard = ({ order }) => {
           <Text c="dimmed" size="xs" fw={700}>
             Order Status:
           </Text>
-          <Text fw={700} size="sm" c={orderStats.color}>
-            {orderStats.label}
+          <Text fw={700} size="sm" c={orderConfig.color}>
+            {orderConfig.label}
           </Text>
         </div>
       </div>
 
-      <Progress value={orderStats.progress} color={orderStats.color} size="lg" className="margin-bottom"/>
+      <OrderStatusProgress order={order} size="lg" />
 
       <div className="flex to-top column full-height margin-bottom margin-top">
         <Text c="dimmed" size="xs" fw={700}>

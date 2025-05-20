@@ -50,9 +50,9 @@ const LoginForm = () => {
           {...form.getInputProps('password')}
           className="margin-bottom"
         />
-        <Group position="apart" mt="lg">
-          <Button type="submit">Log In</Button>
-        </Group>
+        <div className="flex to-right full-width">
+          <Button type="submit" className="full-width margin-40-t">Log In</Button>
+        </div>
       </form>
     </Card>
   );

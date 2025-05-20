@@ -28,4 +28,26 @@ class Order < ApplicationRecord
     self.status = :pending
     self
   end
+
+  def to_json_with_associations(image_method = :image_urls)
+    self.as_json({
+      include: {
+        order_items: {
+          include: {
+            product: {
+              methods: [image_method],
+            }
+          }
+        },
+        shipping_address: {
+          only: [],
+          methods: :full_address
+        },
+        billing_address: {
+          only: [],
+          methods: :full_address
+        }
+      }
+    })
+  end
 end

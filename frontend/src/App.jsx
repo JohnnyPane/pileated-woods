@@ -17,7 +17,7 @@ import StripeProvider from "./components/StripeProvider.jsx";
 import Checkout from "./components/cart/Checkout.jsx";
 import Cart from "./components/cart/Cart.jsx";
 import AuthWrapper from "./components/auth/AuthWrapper.jsx";
-import Order from "./components/cart/Order.jsx";
+import Order from "./components/orders/Order.jsx";
 import Orders from "./components/workshop/Orders.jsx";
 
 
@@ -42,7 +42,7 @@ function App() {
                     </StripeProvider>
                   } />
 
-                  <Route path="/order/:orderId" element={<Order />} />
+                  <Route path="/orders/:orderId" element={<Order />} />
 
                   <Route path="workshop" element={<AdminRoute element={<Workshop />} />} />
                   <Route path="workshop/products/:id" element={<AdminRoute element={<ProductWorkshop />} />} />
