@@ -24,21 +24,24 @@ const productInputs = [
   { name: 'featured', label: 'Featured', type: 'checkbox', value: 'product.featured' },
 ]
 
-const ProductForm = ({ editMode = false, productId = null }) => {
-  const [productType, setProductType] = useState(null);
+const findProductType = (value) => {
+  return productTypes.find(type => type.value === value);
+}
+
+const ProductForm = ({ editMode = false, product = null, close = () => {} }) => {
+  const [productType, setProductType] = useState(product ? findProductType(product.productable_type) : '');
   const navigate = useNavigate();
 
   const form = useForm({
     initialValues: {
       product: {
-        name: '',
-        description: '',
-        price: 0,
-        featured: false,
-        stock: 0,
-        productable_type: '',
-        productable_attributes: {},
-        images: []
+        name: product ? product.name : '',
+        description: product ? product.description : '',
+        price: product ? product.price : 0,
+        featured: product ? product.featured : false,
+        stock: product ? product.stock : 0,
+        productable_type: product ? product.productable_type : '',
+        productable_attributes: product ? product.productable : {},
       },
     },
     validate: {
@@ -51,17 +54,36 @@ const ProductForm = ({ editMode = false, productId = null }) => {
     }
   });
 
-  const onSubmit = async (values) => {
+  const onCreate = async (values) => {
     try {
       const response = await productApi.create(values.product);
-      navigate('/workshop/products/' + response.id);
+      navigate(`/workshop/products/${response.id}`);
+      close();
     } catch (error) {
       console.error('Error creating product:', error);
     }
   }
 
+  const onUpdate = async (values) => {
+    try {
+      const response = await productApi.update(product.id, values.product);
+      navigate(`/workshop/products/${response.id}`);
+      close();
+    } catch (error) {
+      console.error('Error updating product:', error);
+    }
+  }
+
+  const onSubmit = async (values) => {
+    if (editMode) {
+      await onUpdate(values);
+    } else {
+      await onCreate(values);
+    }
+  }
+
   const handleProductTypeChange = (value) => {
-    const productableType = productTypes.find(type => type.value === value);
+    const productableType = findProductType(value);
     if (productableType) {
       form.setFieldValue('product.productable_type', productableType.value);
       form.setFieldValue('product.productable', {});
@@ -82,6 +104,7 @@ const ProductForm = ({ editMode = false, productId = null }) => {
           data={productTypes}
           onChange={handleProductTypeChange}
           className="margin-bottom"
+          defaultValue={product ? product.productable_type : ''}
         />
 
         <Grid>
@@ -109,7 +132,7 @@ const ProductForm = ({ editMode = false, productId = null }) => {
         </Grid>
 
         <Group position="right" mt="md">
-          <Button type="submit">Submit</Button>
+          <Button type="submit">{editMode ? "Update" : "Create"}</Button>
         </Group>
 
       </form>

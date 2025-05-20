@@ -1,15 +1,19 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Carousel } from "@mantine/carousel";
-import { Button, Image, Accordion } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import { Button, Image, Accordion, Modal } from "@mantine/core";
 import './Products.scss';
 
 import { productTypeDisplayName } from "../workshop/utils/productConfigs.js";
 import { useCart } from "../../context/CartContext.jsx";
 import { useIsAdminRoute } from "../../context/AdminRouteContext.jsx";
+import { useAuth } from "../../context/AuthContext.jsx";
+
 import PileatedApi from "../../services/PileatedApi.js";
 import ProductDetails from "./ProductDetails.jsx";
 import NumberPlusMinusInput from "../ui/NumberPlusMinusInput.jsx";
+import ProductForm from "../workshop/ProductForm.jsx";
 
 const productApi = new PileatedApi('product');
 const rootURL = import.meta.env.VITE_API_ROOT_URL;
@@ -20,6 +24,9 @@ function ProductShow({ providedProduct }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const [opened, { open, close }] = useDisclosure(false);
+
+  const { isAdminUser } = useAuth();
   const { addToCart } = useCart();
   const isAdminRoute = useIsAdminRoute();
 
@@ -69,6 +76,8 @@ function ProductShow({ providedProduct }) {
       <NumberPlusMinusInput onChange={setQuantity} value={quantity} min={1} max={product.stock} upperLimitMessage={upperLimitMessage} />
     </span>) : (<span className="product-detail-out-of-stock">Out of Stock</span>);
 
+  const displayAdminComponents = isAdminUser && isAdminRoute;
+
   return (
     <div className="product-detail">
       <div className="product-detail-container">
@@ -109,7 +118,7 @@ function ProductShow({ providedProduct }) {
           </Accordion>
 
           <div className="product-detail-action">
-            {stockDisplay}
+            {!displayAdminComponents && stockDisplay}
             {!isAdminRoute &&
               <Button
                 onClick={() => addToCart(product, quantity)}
@@ -122,9 +131,26 @@ function ProductShow({ providedProduct }) {
                 Add to cart
               </Button>
             }
+
+            {displayAdminComponents &&
+              <Button
+                onClick={open}
+                radius="0"
+                color="pink"
+                className="product-detail-add-to-cart"
+                fullWidth
+                disabled={!isInStock}
+              >
+                Edit Product
+              </Button>
+            }
           </div>
         </div>
       </div>
+
+      {displayAdminComponents && <Modal opened={opened} onClose={close} size="auto">
+        <ProductForm editMode={true} product={product} close={close} />
+      </Modal>}
     </div>
   );
 }

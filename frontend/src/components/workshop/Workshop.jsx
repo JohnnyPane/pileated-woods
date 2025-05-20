@@ -20,7 +20,7 @@ const Workshop = () => {
       <ProductList />
 
       <Modal opened={opened} onClose={close} size="auto">
-        <ProductForm />
+        <ProductForm close={close} />
       </Modal>
     </div>
   );

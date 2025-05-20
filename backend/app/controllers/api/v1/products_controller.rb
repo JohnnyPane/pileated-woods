@@ -4,6 +4,7 @@ module Api
       include Rails.application.routes.url_helpers
       before_action :set_product, only: [:show]
       before_action :authenticate_user!, except: [:index, :show]
+      before_action :ensure_admin!, except: [:index, :show]
 
       def index
         @products = Product.all.includes(:productable).includes(images_attachments: :blob)
@@ -26,6 +27,20 @@ module Api
         render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
       rescue ArgumentError => e
         render json: { errors: [e.message] }, status: :bad_request
+      end
+
+      def update
+        Product.transaction do
+          @product = Product.find(params[:id])
+          @product.update!(product_params)
+          @product.productable.update!(productable_params)
+        end
+
+        render json: product_data(@product), status: :ok
+      rescue ActiveRecord::RecordNotFound => e
+        render json: { errors: [e.message] }, status: :not_found
+      rescue ActiveRecord::RecordInvalid => e
+        render json: { errors: e.record.errors.full_messages }, status: :unprocessable_entity
       end
 
       private

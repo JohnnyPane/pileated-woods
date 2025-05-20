@@ -9,6 +9,7 @@ const TextInputField = ({ label, placeholder, value, onChange }) => {
       value={value}
       onChange={onChange}
       className="margin-bottom"
+      defaultValue={value}
     />
   );
 }
@@ -21,6 +22,7 @@ const NumberInputField = ({ label, placeholder, value, onChange }) => {
       value={value}
       onChange={onChange}
       className="margin-bottom"
+      defaultValue={value}
     />
   );
 }
@@ -32,6 +34,7 @@ const SwitchField = ({ label, checked, onChange }) => {
       checked={checked}
       onChange={onChange}
       className="margin-bottom"
+      defaultChecked={checked}
     />
   );
 }
@@ -46,7 +49,7 @@ const ProductFormFields = ({ productType, form }) => {
     <div>
       {formFields.map((field) => {
         const { label, placeholder, type, value } = field;
-        const fieldValue = form.values.product[value];
+        const fieldValue = form.values.product.productable_attributes[value] || '';
 
         switch (type) {
           case 'text':
@@ -57,6 +60,7 @@ const ProductFormFields = ({ productType, form }) => {
                 placeholder={placeholder}
                 value={fieldValue}
                 onChange={(event) => form.setFieldValue(`product.productable_attributes.${value}`, event.currentTarget.value)}
+                defaultValue={fieldValue}
               />
             );
           case 'number':
@@ -67,6 +71,7 @@ const ProductFormFields = ({ productType, form }) => {
                 placeholder={placeholder}
                 value={fieldValue}
                 onChange={(eventValue) => form.setFieldValue(`product.productable_attributes.${value}`, eventValue)}
+                defaultValue={fieldValue}
               />
             );
           case 'switch':
@@ -76,6 +81,7 @@ const ProductFormFields = ({ productType, form }) => {
                 label={label}
                 checked={fieldValue}
                 onChange={(event) => form.setFieldValue(`product.productable_attributes.${value}`, event.currentTarget.checked)}
+                defaultChecked={fieldValue}
               />
             );
           default:

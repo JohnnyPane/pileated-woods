@@ -2,6 +2,7 @@ import React from 'react'
 import '@mantine/core/styles.css';
 import '@mantine/carousel/styles.css';
 import '@mantine/notifications/styles.css';
+import '@mantine/dropzone/styles.css';
 import '@fontsource/lora';
 import '@fontsource/lora/400-italic.css';
 import '@fontsource/lora/700.css';

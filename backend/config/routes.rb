@@ -33,7 +33,7 @@ Rails.application.routes.draw do
       end
       resources :live_edge_slabs, controller: 'products', type: 'LiveEdgeSlab'
       resources :orders, only: [:index, :show, :create]
-      resources :products, only: [:index, :show, :create]
+      resources :products, only: [:index, :show, :create, :update, :destroy]
       resources :uploads, only: [:create, :destroy]
 
       post 'webhooks/stripe', to: 'webhooks#stripe'
