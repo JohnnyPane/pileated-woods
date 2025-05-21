@@ -1,6 +1,6 @@
 import { Title, Image } from '@mantine/core';
 import './Home.scss'
-import FeaturedProduct from "./FeaturedProduct.jsx";
+import FeaturedProducts from './FeaturedProducts';
 
 const Home = () => {
   return (
@@ -29,7 +29,7 @@ const Home = () => {
       </div>
 
       <div className="home-content">
-        <FeaturedProduct />
+        <FeaturedProducts />
       </div>
     </>
   );

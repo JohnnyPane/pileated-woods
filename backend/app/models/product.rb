@@ -7,4 +7,7 @@ class Product < ApplicationRecord
 
   scope :in_stock, -> { where('stock > 0') }
   scope :live_edge_slabs, -> { where(productable_type: 'LiveEdgeSlab') }
+  scope :featured, -> { where(featured: true) }
+
+  accepts_filtering_scopes_for :in_stock, :live_edge_slabs, :featured
 end

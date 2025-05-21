@@ -9,10 +9,8 @@ Things you may want to cover:
 * Install libvips
 
 ### TODO
-1. Orders Page - update order status
-2. Secure orders page
-3. Ensure items in stock
 4. About page 
+5. Featured products component
 5. Cart cleanup service 
 6. Add filters and pagination to products page
 7. Add Email service for purchases

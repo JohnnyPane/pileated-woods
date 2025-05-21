@@ -7,7 +7,7 @@ module Api
       before_action :ensure_admin!, except: [:index, :show]
 
       def index
-        @products = Product.all.includes(:productable).includes(images_attachments: :blob)
+        @products = Product.all.apply_scopes(scopes).includes(:productable).includes(images_attachments: :blob)
 
         render json: @products.map { |product| product_data(product) }, status: :ok
       end

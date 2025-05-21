@@ -12,6 +12,7 @@ import Cart from "../cart/Cart.jsx";
 
 const links = [
   { link: '/products', label: 'PRODUCTS' },
+  { link: '/about', label: 'ABOUT US' },
   { link: '/workshop', label: 'WORKSHOP', admin: true },
   { link: '/workshop/orders', label: 'ORDERS', admin: true },
 ]

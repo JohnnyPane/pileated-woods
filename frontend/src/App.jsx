@@ -1,8 +1,8 @@
-import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import './App.css';
 import './utility.scss'
-import { AuthProvider, useAuth } from "./context/AuthContext.jsx";
+import { AuthProvider } from "./context/AuthContext.jsx";
 import { CartProvider } from "./context/CartContext.jsx";
 
 import AdminRoute from "./components/workshop/AdminRoute.jsx";
@@ -19,6 +19,7 @@ import Cart from "./components/cart/Cart.jsx";
 import AuthWrapper from "./components/auth/AuthWrapper.jsx";
 import Order from "./components/orders/Order.jsx";
 import Orders from "./components/workshop/Orders.jsx";
+import About from "./components/home/About.jsx";
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
               <div className="main-container-content">
                 <Routes>
                   <Route path="/" element={<Home />} />
+                  <Route path="/about" element={<About />} />
                   <Route path="/login" element={<LoginSignup />} />
                   <Route path="/products" element={<ProductList />} />
                   <Route path="/products/:id" element={<ProductShow />} />

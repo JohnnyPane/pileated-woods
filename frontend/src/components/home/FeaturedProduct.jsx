@@ -1,24 +1,36 @@
-import { Image, Grid } from '@mantine/core';
+import { useNavigate } from "react-router-dom";
+import { Image, Grid, Button } from '@mantine/core';
+import { setImageUrl } from "../../utils/imageConfig.js";
+import { productTypeDisplayName } from "../workshop/utils/productConfigs.js";
 
-const FeaturedProduct = () => {
+const FeaturedProduct = ({ product, index }) => {
+  const navigate = useNavigate();
+
+  const isEven = index % 2 === 0;
+
+  const onBuyClick = () => {
+    navigate(`/products/${product.id}`);
+  }
+
   return (
     <div className="featured-product">
       <Grid>
-        <Grid.Col span={6}>
-          <div className="flex column horizontal-center featured-product-description">
-            <h2>Featured Product</h2>
-            <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.".</p>
-            <button>Buy Now</button>
+        <Grid.Col span={6} order={isEven ? 1 : 2}>
+          <div className="flex column full-height horizontal-center featured-product-description">
+            <h1 className="non-bold">{product.name}</h1>
+            <p className="label">{productTypeDisplayName[product.productable_type]}</p>
+            <p>{product.description}</p>
+            <Button variant="subtle" color="dark" onClick={onBuyClick}>Buy Now</Button>
           </div>
         </Grid.Col>
 
-        <Grid.Col span={6}>
+        <Grid.Col span={6} order={isEven ? 2 : 1}>
           <div className="flex horizontal-center">
             <Image
               className="featured-product-image"
-              src="https://pileated-woods.s3.us-east-1.amazonaws.com/homemade_guitar.jpg"
-              alt="Featured Product"
-              style={{ maxWidth: '80%', height: 'auto' }} radius="md"
+              src={setImageUrl(product.images[0])}
+              alt={product.name}
+              style={{ maxWidth: '80%', height: 'auto' }}
             />
           </div>
         </Grid.Col>

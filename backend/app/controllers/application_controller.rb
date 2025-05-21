@@ -17,4 +17,8 @@ class ApplicationController < ActionController::API
       render json: { error: 'Access denied' }, status: :forbidden
     end
   end
+
+  def scopes
+    params[:scopes] || []
+  end
 end

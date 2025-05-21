@@ -186,7 +186,7 @@ const CheckoutDetails = () => {
 
         {error && <div className="error">{error}</div>}
         <Button type="submit" color="violet" disabled={!stripe || !elements || processing} className="margin-40-t full-width">
-          {processing ? "Processing..." : `Pay $${cartTotalDisplay}`}
+          {processing ? "Processing..." : `Pay ${cartTotalDisplay}`}
         </Button>
       </form>
 

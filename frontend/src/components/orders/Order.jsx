@@ -20,7 +20,6 @@ const Order = () => {
     const fetchOrder = async () => {
       try {
         const response = await orderApi.get(orderId);
-        console.log("Order response:", response);
         setOrder(response);
       } catch (error) {
         console.error("Error fetching order:", error);
